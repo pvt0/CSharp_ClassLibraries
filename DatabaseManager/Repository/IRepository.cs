@@ -1,12 +1,13 @@
 using System.Linq.Expressions;
+using DatabaseManager.Entities;
 using Paging.Collection;
 
 namespace DatabaseManager.Repository;
 
-public interface IRepository<TEntity> where TEntity : class
+public interface IRepository<TEntity> where TEntity : BaseEntity
 {
 	Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression);
-	Task<DataCollection<TEntity>> ListAsync<TId>(int page = 1, int take = 10, IEnumerable<TId>? entity = null);
+	IEnumerable<TEntity> List<TId>(IEnumerable<TId>? entity = null);
 	Task<TEntity?> GetByIdAsync<TId>(TId id);
 	TEntity Insert(TEntity entity);
 	void InsertRange(IEnumerable<TEntity> entities);
