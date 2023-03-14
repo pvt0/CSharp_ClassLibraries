@@ -23,6 +23,9 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
 
 	#region IRepository implementation
 
+	public IEnumerable<TEntity> List(Expression<Func<TEntity, bool>>? expression = null)
+		=> expression == null ? _dbSet : _dbSet.Where(expression);
+
 	public IEnumerable<TEntity> List<TId>(IEnumerable<TId>? entity = null)
 		=> _dbSet.Where(e => entity == null || entity.Contains((TId)e.Id));
 	
