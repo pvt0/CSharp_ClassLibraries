@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace DatabaseManager.Entities;
+namespace DatabaseManager.GenericBaseEntity;
 
 public abstract class BaseEntity
 {

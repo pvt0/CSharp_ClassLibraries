@@ -1,8 +1,8 @@
-using DatabaseManager.Entities;
-using DatabaseManager.Repository;
+using DatabaseManager.GenericBaseEntity;
+using DatabaseManager.GenericRepository;
 using Microsoft.EntityFrameworkCore;
 
-namespace DatabaseManager.UnitOfWork;
+namespace DatabaseManager.GenericUnitOfWork;
 
 public class UnitOfWork : IUnitOfWork
 {

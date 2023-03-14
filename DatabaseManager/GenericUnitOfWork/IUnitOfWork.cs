@@ -1,7 +1,7 @@
-using DatabaseManager.Entities;
-using DatabaseManager.Repository;
+using DatabaseManager.GenericBaseEntity;
+using DatabaseManager.GenericRepository;
 
-namespace DatabaseManager.UnitOfWork;
+namespace DatabaseManager.GenericUnitOfWork;
 
 public interface IUnitOfWork : IDisposable
 {

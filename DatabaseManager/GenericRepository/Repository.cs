@@ -1,8 +1,8 @@
 using System.Linq.Expressions;
-using DatabaseManager.Entities;
+using DatabaseManager.GenericBaseEntity;
 using Microsoft.EntityFrameworkCore;
 
-namespace DatabaseManager.Repository;
+namespace DatabaseManager.GenericRepository;
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
 {
