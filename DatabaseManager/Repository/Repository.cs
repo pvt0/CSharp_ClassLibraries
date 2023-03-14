@@ -32,7 +32,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
 	public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
 		=> await _dbSet.SingleOrDefaultAsync(expression, cancellationToken: cancellationToken);
 
-	public async Task<TEntity?> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken)
+	public async Task<TEntity?> GetAsync<TId>(TId id, CancellationToken cancellationToken)
 		=> await _dbSet.SingleOrDefaultAsync(e => e.Id == (object)id, cancellationToken: cancellationToken);
 
 	public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken)
@@ -69,10 +69,10 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
 	public void DeleteRange(IEnumerable<TEntity> entities)
 		=> _dbSet.RemoveRange(entities);
 
-	public void DeleteByIdRange<TId>(IEnumerable<TId> ids)
+	public void DeleteRange<TId>(IEnumerable<TId> ids)
 	{
 		var entities = List(ids);
-
+	
 		DeleteRange(entities);
 	}
 
