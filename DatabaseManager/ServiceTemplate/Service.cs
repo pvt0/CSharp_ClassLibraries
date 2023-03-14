@@ -1,10 +1,9 @@
 using System.Linq.Expressions;
-using DatabaseManager.Entities;
-using DatabaseManager.Repository;
-using DatabaseManager.UnitOfWork;
+using DatabaseManager.GenericBaseEntity;
+using DatabaseManager.GenericUnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DatabaseManager.Services;
+namespace DatabaseManager.ServiceTemplate;
 
 public class Service<TEntity> : IService<TEntity> where TEntity : BaseEntity
 {

@@ -1,5 +1,5 @@
-using DatabaseManager.Repository;
-using DatabaseManager.UnitOfWork;
+using DatabaseManager.GenericRepository;
+using DatabaseManager.GenericUnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DatabaseManager.Configure;
@@ -12,7 +12,7 @@ public static class ConfigureServicesExtension
 			throw new ArgumentNullException(nameof(services));
 		
 		services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-		services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+		services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 		return services;
 	}
