@@ -1,4 +1,4 @@
-using DatabaseManager.GenericBaseEntity;
+using DatabaseManager.EntityTemplate;
 using DatabaseManager.GenericRepository;
 
 namespace DatabaseManager.GenericUnitOfWork;

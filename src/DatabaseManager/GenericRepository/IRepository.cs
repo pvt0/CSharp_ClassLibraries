@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using DatabaseManager.GenericBaseEntity;
+using DatabaseManager.EntityTemplate;
 
 namespace DatabaseManager.GenericRepository;
 
