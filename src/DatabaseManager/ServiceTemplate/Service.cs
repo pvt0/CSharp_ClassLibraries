@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using DatabaseManager.GenericBaseEntity;
+using DatabaseManager.BaseEntityTemplate;
 using DatabaseManager.GenericUnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 

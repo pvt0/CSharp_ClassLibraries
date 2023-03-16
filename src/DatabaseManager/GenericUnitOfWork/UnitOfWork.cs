@@ -1,4 +1,4 @@
-using DatabaseManager.GenericBaseEntity;
+using DatabaseManager.BaseEntityTemplate;
 using DatabaseManager.GenericRepository;
 using Microsoft.EntityFrameworkCore;
 
