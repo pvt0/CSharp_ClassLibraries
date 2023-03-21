@@ -40,9 +40,9 @@ public class Service<TEntity> : IService<TEntity> where TEntity : BaseEntity
 		return await _unitOfWork.Repository<TEntity>().GetAsync(expression, cancellationToken);
 	}
 
-	public Task<TEntity?> GetAsync<TId>(TId id, CancellationToken cancellationToken)
+	public async Task<TEntity?> GetAsync<TId>(TId id, CancellationToken cancellationToken)
 	{
-		return _unitOfWork.Repository<TEntity>().GetAsync(id, cancellationToken);
+		return await _unitOfWork.Repository<TEntity>().GetAsync(id, cancellationToken);
 	}
 
 	public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken)
