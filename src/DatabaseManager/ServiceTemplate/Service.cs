@@ -30,9 +30,9 @@ public class Service<TEntity> : IService<TEntity> where TEntity : BaseEntity
 		return _unitOfWork.Repository<TEntity>().List(expression);
 	}
 
-	public IEnumerable<TEntity> List<TId>(IEnumerable<TId>? entity = null)
+	public IEnumerable<TEntity> List<TId>(IEnumerable<TId>? entityIds = null)
 	{
-		return _unitOfWork.Repository<TEntity>().List(entity);
+		return _unitOfWork.Repository<TEntity>().List(entityIds);
 	}
 
 	public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)

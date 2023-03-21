@@ -26,8 +26,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
 	public IEnumerable<TEntity> List(Expression<Func<TEntity, bool>>? expression = null)
 		=> expression == null ? _dbSet : _dbSet.Where(expression);
 
-	public IEnumerable<TEntity> List<TId>(IEnumerable<TId>? entity = null)
-		=> _dbSet.Where(e => entity == null || entity.Contains((TId)e.Id));
+	public IEnumerable<TEntity> List<TId>(IEnumerable<TId>? entityIds = null)
+		=> _dbSet.Where(e => entityIds == null || entityIds.Contains((TId)e.Id));
 	
 	public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
 		=> await _dbSet.SingleOrDefaultAsync(expression, cancellationToken: cancellationToken);
