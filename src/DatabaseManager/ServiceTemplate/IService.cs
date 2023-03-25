@@ -11,6 +11,6 @@ public interface IService<TEntity> where TEntity : BaseEntity
 	Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 	Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
 	Task UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
-	Task RemoveAsync<TId>(TId id, CancellationToken cancellationToken = default);
-	Task RemoveRangeAsync<TId>(IEnumerable<TId> ids, CancellationToken cancellationToken = default);
+	Task RemoveAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : IEquatable<TId>;
+	Task RemoveRangeAsync<TId>(IEnumerable<TId> ids, CancellationToken cancellationToken = default) where TId : IEquatable<TId>;
 }
