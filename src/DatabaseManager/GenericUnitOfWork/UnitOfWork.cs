@@ -42,8 +42,8 @@ public class UnitOfWork : IUnitOfWork
 		return (IRepository<TEntity>)_repositories[type.Name];
 	}
 
-	public async Task<int> SaveAsync()
-		=> await _context.SaveChangesAsync();
+	public async Task<int> SaveAsync(CancellationToken cancellationToken)
+		=> await _context.SaveChangesAsync(cancellationToken);
 
 	#endregion
 

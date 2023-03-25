@@ -11,5 +11,5 @@ public interface IUnitOfWork : IDisposable
 	void Rollback();
 	bool Commit();
 */
-	Task<int> SaveAsync();
+	Task<int> SaveAsync(CancellationToken cancellationToken);
 }

@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paging", "src\Paging\Paging
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseManager", "src\DatabaseManager\DatabaseManager.csproj", "{AF3D9EC6-78E4-4B6C-90CE-46C5DB27C941}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{58CF6E74-2A16-4DD7-80A9-B5DB45B31733}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{58CF6E74-2A16-4DD7-80A9-B5DB45B31733}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
