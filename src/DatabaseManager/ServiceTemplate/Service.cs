@@ -27,30 +27,20 @@ public class Service<TEntity> : IService<TEntity> where TEntity : BaseEntity
 
 	public async Task<IQueryable<TEntity>> ListAsync(Expression<Func<TEntity, bool>> expression,
 		CancellationToken cancellationToken = default)
-	{
-		return await _unitOfWork.Repository<TEntity>().ListAsync(expression, cancellationToken);
-	}
-
-	public async Task<IQueryable<TEntity>> ListAsync<TId>(IEnumerable<TId>? ids = null,
-		CancellationToken cancellationToken = default)
-	{
-		return await _unitOfWork.Repository<TEntity>().ListAsync(ids, cancellationToken);
-	}
+		=> await _unitOfWork.Repository<TEntity>().ListAsync(expression, cancellationToken);
 
 	public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression, 
 		CancellationToken cancellationToken = default)
-	{
-		return await _unitOfWork.Repository<TEntity>().GetAsync(expression, cancellationToken);
-	}
+		=> await _unitOfWork.Repository<TEntity>().GetAsync(expression, cancellationToken);
 
-	public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken = default)
+	public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
 	{
 		var result = await _unitOfWork.Repository<TEntity>().AddAsync(entity, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);
-		return result;
+		return result.Entity;
 	}
 
-	public async Task InsertRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+	public async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
 	{
 		await _unitOfWork.Repository<TEntity>().AddRangeAsync(entities, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);
@@ -69,15 +59,27 @@ public class Service<TEntity> : IService<TEntity> where TEntity : BaseEntity
 		await _unitOfWork.SaveAsync(cancellationToken);
 	}
 
-	public async Task DeleteAsync<TId>(TId id, CancellationToken cancellationToken = default)
+	public async Task RemoveAsync<TId>(TId id, CancellationToken cancellationToken = default)
 	{
-		await _unitOfWork.Repository<TEntity>().DeleteAsync(id, cancellationToken);
+		var entity = await _unitOfWork.Repository<TEntity>()
+			.GetAsync(entity => entity.Id == (object)id, cancellationToken);
+
+		if (entity == null) 
+			throw new NullReferenceException($"Does not exist '{nameof(TEntity)}' with Id {id}");
+		
+		await _unitOfWork.Repository<TEntity>().RemoveAsync(entity, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);
 	}
 
-	public async Task DeleteRangeAsync<TId>(IEnumerable<TId> ids, CancellationToken cancellationToken = default)
+	public async Task RemoveRangeAsync<TId>(IEnumerable<TId> ids, CancellationToken cancellationToken = default)
 	{
-		await _unitOfWork.Repository<TEntity>().DeleteRangeAsync(ids, cancellationToken);
+		var entities = await _unitOfWork.Repository<TEntity>()
+			.ListAsync(entity => ids.Contains((TId)entity.Id), cancellationToken);
+
+		if (!entities.Any())
+			throw new NullReferenceException();
+		
+		await _unitOfWork.Repository<TEntity>().RemoveRangeAsync(entities, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);
 	}
 

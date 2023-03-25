@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using DatabaseManager.EntityTemplate;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DatabaseManager.GenericRepository;
 
@@ -23,17 +24,16 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
 
 	#region IRepository implementation
 
-	public Task<IQueryable<TEntity>> ListAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
-		=> Task.Run(() => _dbSet.Where(expression), cancellationToken);
+	public Task<IQueryable<TEntity>> ListAsync(Expression<Func<TEntity, bool>>? expression = null, 
+		CancellationToken cancellationToken = default)
+		=> Task.Run(() => expression == null ? _dbSet : _dbSet.Where(expression), cancellationToken);
 
-	public Task<IQueryable<TEntity>> ListAsync<TId>(IEnumerable<TId>? ids = null, CancellationToken cancellationToken = default)
-		=> Task.Run(() => _dbSet.Where(e => ids == null || ids.Contains((TId)e.Id)), cancellationToken);
-	
-	public Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
-		=> _dbSet.SingleOrDefaultAsync(expression, cancellationToken: cancellationToken);
+	public Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression, 
+		CancellationToken cancellationToken = default)
+		=> _dbSet.FirstOrDefaultAsync(expression, cancellationToken: cancellationToken);
 
-	public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
-		=> (await _dbSet.AddAsync(entity, cancellationToken)).Entity;
+	public ValueTask<EntityEntry<TEntity>> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
+		=> _dbSet.AddAsync(entity, cancellationToken);
 	
 	public Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
 		=> _dbSet.AddRangeAsync(entities, cancellationToken);
@@ -44,21 +44,11 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
 	public Task UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
 		=> Task.Run(() => _dbSet.UpdateRange(entities), cancellationToken);
 
-	public async Task DeleteAsync<TId>(TId id, CancellationToken cancellationToken = default)
-	{
-		var entity = await _dbSet.FindAsync(id, cancellationToken);
-		
-		if (entity == null)
-			throw new Exception($"Does not exist {nameof(entity)} with id {id}");
-		
-		_dbSet.Remove(entity);
-	}
+	public Task RemoveAsync(TEntity entity, CancellationToken cancellationToken = default)
+		=> Task.Run(() => _dbSet.Remove(entity), cancellationToken);
 
-	public async Task DeleteRangeAsync<TId>(IEnumerable<TId> ids, CancellationToken cancellationToken = default)
-	{
-		var entities = await ListAsync(ids, cancellationToken);
-		_dbSet.RemoveRange(entities);
-	}
+	public Task RemoveRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+		=> Task.Run(() => _dbSet.RemoveRange(entities), cancellationToken);
 
 	#endregion
 }
