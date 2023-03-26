@@ -74,7 +74,7 @@ public class Service<TEntity, TId> : IService<TEntity, TId> where TEntity : Base
 	public async Task RemoveRangeAsync(IEnumerable<TId> ids, CancellationToken cancellationToken = default)
 	{
 		var entities = await _unitOfWork.Repository<TEntity, TId>()
-			.ListAsync(entity => ids.Contains((TId)entity.Id), cancellationToken);
+			.ListAsync(entity => ids.Contains(entity.Id), cancellationToken);
 
 		if (!entities.Any())
 			throw new NullReferenceException();

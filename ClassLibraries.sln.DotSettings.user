@@ -1,0 +1,21 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3b5700fb_002D8be0_002D4420_002Daa15_002D9a8e8bcf8e7e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ListAsync_ExpressionEqualNull_ReturnListWith5Items #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::D92D647F-A4C1-43F8-A909-85953A4A04F6::net7.0::DatabaseManager.IntegrationTest.RepositoryTests.ListAsync_ExpressionEqualNull_ReturnListWith5Items&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D92D647F-A4C1-43F8-A909-85953A4A04F6::net7.0::DatabaseManager.IntegrationTest.RepositoryTests.ListAsync_ExpressionNotNull_ReturnListWith5Items&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D92D647F-A4C1-43F8-A909-85953A4A04F6::net7.0::DatabaseManager.IntegrationTest.RepositoryTests.GetAsync_ByName_Entity4&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D92D647F-A4C1-43F8-A909-85953A4A04F6::net7.0::DatabaseManager.IntegrationTest.RepositoryTests.GetAsync_ById_Error&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D92D647F-A4C1-43F8-A909-85953A4A04F6::net7.0::DatabaseManager.IntegrationTest.RepositoryTests.AddAsync_Correctly&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D92D647F-A4C1-43F8-A909-85953A4A04F6::net7.0::DatabaseManager.IntegrationTest.RepositoryTests.AddAsync_WithAnExistedId_ThrowException&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D92D647F-A4C1-43F8-A909-85953A4A04F6::net7.0::DatabaseManager.IntegrationTest.RepositoryTests.AddAsync_WithAnExistedId_DontAdded&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f15c6273_002D5089_002D4b94_002Da5e2_002Ddfc9ee79ae39/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ListAsync_ExpressionEqualNull_ReturnListWith5Items" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::D92D647F-A4C1-43F8-A909-85953A4A04F6::net7.0::DatabaseManager.IntegrationTest.RepositoryTests.ListAsync_ExpressionEqualNull_ReturnListWith5Items&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D92D647F-A4C1-43F8-A909-85953A4A04F6::net7.0::DatabaseManager.IntegrationTest.RepositoryTests.ListAsync_ExpressionNotNull_ReturnListWith5Items&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D92D647F-A4C1-43F8-A909-85953A4A04F6::net7.0::DatabaseManager.IntegrationTest.RepositoryTests.GetAsync_ByName_Entity4&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D92D647F-A4C1-43F8-A909-85953A4A04F6::net7.0::DatabaseManager.IntegrationTest.RepositoryTests.GetAsync_ById_Error&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D92D647F-A4C1-43F8-A909-85953A4A04F6::net7.0::DatabaseManager.IntegrationTest.RepositoryTests.AddAsync_Correctly&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
