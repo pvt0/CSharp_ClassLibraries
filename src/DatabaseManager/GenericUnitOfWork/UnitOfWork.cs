@@ -1,6 +1,7 @@
 using DatabaseManager.EntityTemplate;
 using DatabaseManager.GenericRepository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DatabaseManager.GenericUnitOfWork;
 
@@ -10,7 +11,6 @@ public class UnitOfWork : IUnitOfWork
 
 	private readonly DbContext _context;
 	private readonly Dictionary<string, object> _repositories;
-//	private readonly IDbContextTransaction _transaction;
 
 	#endregion
 
@@ -42,6 +42,10 @@ public class UnitOfWork : IUnitOfWork
 		return (IRepository<TEntity>)_repositories[type.Name];
 	}
 
+	public IDbContextTransaction BeginTransaction()
+		=> _context.Database.BeginTransaction();
+
+
 	public async Task<int> SaveAsync(CancellationToken cancellationToken)
 		=> await _context.SaveChangesAsync(cancellationToken);
 
@@ -50,7 +54,9 @@ public class UnitOfWork : IUnitOfWork
 	#region IDispose implementation
 
 	public void Dispose()
-		=> _context.Dispose();
+	{
+		_context.Dispose();
+	}
 
 	#endregion
 }

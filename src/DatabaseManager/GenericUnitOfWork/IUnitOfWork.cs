@@ -1,15 +1,12 @@
 using DatabaseManager.EntityTemplate;
 using DatabaseManager.GenericRepository;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DatabaseManager.GenericUnitOfWork;
 
 public interface IUnitOfWork : IDisposable
 {
 	IRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity;
-/*	
-	void BeginTransaction();
-	void Rollback();
-	bool Commit();
-*/
+	IDbContextTransaction BeginTransaction();
 	Task<int> SaveAsync(CancellationToken cancellationToken);
 }
