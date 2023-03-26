@@ -26,20 +26,20 @@ public class UnitOfWork : IUnitOfWork
 
 	#region IUnitOfWork implementation
 
-	public IRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity
+	public IRepository<TEntity, TId> Repository<TEntity, TId>() where TEntity : BaseEntity<TId>
 	{
 		var type = typeof(TEntity);
 
 		if ( ! _repositories.ContainsKey(type.Name))
 		{
-			var repoType = typeof(Repository<>).MakeGenericType(type);
+			var repoType = typeof(Repository<TEntity, TId>).MakeGenericType(type);
 			var repo = Activator.CreateInstance(repoType, _context);
 
 			if (repo != null)
 				_repositories.Add(type.Name, repo);
 		}
 
-		return (IRepository<TEntity>)_repositories[type.Name];
+		return (IRepository<TEntity, TId>)_repositories[type.Name];
 	}
 
 	public IDbContextTransaction BeginTransaction()

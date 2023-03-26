@@ -2,7 +2,7 @@ using DatabaseManager.GenericRepository;
 using DatabaseManager.GenericUnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DatabaseManager.Configure;
+namespace DatabaseManager.Configuration;
 
 public static class ConfigureServicesExtension
 {

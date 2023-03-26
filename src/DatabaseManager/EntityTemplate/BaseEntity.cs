@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DatabaseManager.EntityTemplate;
 
-public abstract class BaseEntity
+public abstract class BaseEntity<TId>
 {
-	[Key] public object Id { get; set; }
+	[Key] public TId Id { get; set; }
 }
