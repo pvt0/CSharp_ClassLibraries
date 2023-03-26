@@ -6,7 +6,7 @@ namespace DatabaseManager.GenericUnitOfWork;
 
 public interface IUnitOfWork : IDisposable
 {
-	IRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity;
+	IRepository<TEntity, TId> Repository<TEntity, TId>() where TEntity : BaseEntity<TId>;
 	IDbContextTransaction BeginTransaction();
 	Task<int> SaveAsync(CancellationToken cancellationToken);
 }

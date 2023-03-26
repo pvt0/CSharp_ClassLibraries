@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DatabaseManager.ServiceTemplate;
 
-public class Service<TEntity> : IService<TEntity> where TEntity : BaseEntity
+public class Service<TEntity, TId> : IService<TEntity, TId> where TEntity : BaseEntity<TId>
 {
 	#region variables
 
@@ -27,59 +27,59 @@ public class Service<TEntity> : IService<TEntity> where TEntity : BaseEntity
 
 	public async Task<IQueryable<TEntity>> ListAsync(Expression<Func<TEntity, bool>> expression,
 		CancellationToken cancellationToken = default)
-		=> await _unitOfWork.Repository<TEntity>().ListAsync(expression, cancellationToken);
+		=> await _unitOfWork.Repository<TEntity, TId>().ListAsync(expression, cancellationToken);
 
 	public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression, 
 		CancellationToken cancellationToken = default)
-		=> await _unitOfWork.Repository<TEntity>().GetAsync(expression, cancellationToken);
+		=> await _unitOfWork.Repository<TEntity, TId>().GetAsync(expression, cancellationToken);
 
 	public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
 	{
-		var result = await _unitOfWork.Repository<TEntity>().AddAsync(entity, cancellationToken);
+		var result = await _unitOfWork.Repository<TEntity, TId>().AddAsync(entity, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);
 		return result.Entity;
 	}
 
 	public async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
 	{
-		await _unitOfWork.Repository<TEntity>().AddRangeAsync(entities, cancellationToken);
+		await _unitOfWork.Repository<TEntity, TId>().AddRangeAsync(entities, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);
 	}
 
 	public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
 	{
-		var result = await _unitOfWork.Repository<TEntity>().UpdateAsync(entity, cancellationToken);
+		var result = await _unitOfWork.Repository<TEntity, TId>().UpdateAsync(entity, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);
 		return result;
 	}
 
 	public async Task UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
 	{
-		await _unitOfWork.Repository<TEntity>().UpdateRangeAsync(entities, cancellationToken);
+		await _unitOfWork.Repository<TEntity, TId>().UpdateRangeAsync(entities, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);
 	}
 
-	public async Task RemoveAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : IEquatable<TId>
+	public async Task RemoveAsync(TId id, CancellationToken cancellationToken = default)
 	{
-		var entity = await _unitOfWork.Repository<TEntity>()
+		var entity = await _unitOfWork.Repository<TEntity, TId>()
 			.GetAsync(entity => entity.Id.Equals(id), cancellationToken);
 
 		if (entity == null) 
 			throw new NullReferenceException($"Does not exist '{nameof(TEntity)}' with Id {id}");
 		
-		await _unitOfWork.Repository<TEntity>().RemoveAsync(entity, cancellationToken);
+		await _unitOfWork.Repository<TEntity, TId>().RemoveAsync(entity, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);
 	}
 
-	public async Task RemoveRangeAsync<TId>(IEnumerable<TId> ids, CancellationToken cancellationToken = default) where TId : IEquatable<TId>
+	public async Task RemoveRangeAsync(IEnumerable<TId> ids, CancellationToken cancellationToken = default)
 	{
-		var entities = await _unitOfWork.Repository<TEntity>()
+		var entities = await _unitOfWork.Repository<TEntity, TId>()
 			.ListAsync(entity => ids.Contains((TId)entity.Id), cancellationToken);
 
 		if (!entities.Any())
 			throw new NullReferenceException();
 		
-		await _unitOfWork.Repository<TEntity>().RemoveRangeAsync(entities, cancellationToken);
+		await _unitOfWork.Repository<TEntity, TId>().RemoveRangeAsync(entities, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);
 	}
 
