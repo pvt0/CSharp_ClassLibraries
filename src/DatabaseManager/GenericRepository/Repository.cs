@@ -5,11 +5,12 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DatabaseManager.GenericRepository;
 
-public class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : BaseEntity<TId>
+internal class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : BaseEntity<TId>
 {
 	#region variables
 
 	private readonly DbSet<TEntity> _dbSet;
+	private readonly DbContext _context;
 
 	#endregion
 
@@ -17,6 +18,7 @@ public class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity 
 
 	public Repository(DbContext context)
 	{
+		_context = context;
 		_dbSet = context.Set<TEntity>();
 	}
 
@@ -38,11 +40,24 @@ public class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity 
 	public Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
 		=> _dbSet.AddRangeAsync(entities, cancellationToken);
 
-	public Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default) 
-		=> Task.Run(() => _dbSet.Update(entity).Entity, cancellationToken);
+	public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default) 
+	{
+		var entry = _dbSet.Attach(entity);
+		entry.State = EntityState.Modified;
+		await _context.SaveChangesAsync(cancellationToken);
+		return entry.Entity;
+	}
 
-	public Task UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
-		=> Task.Run(() => _dbSet.UpdateRange(entities), cancellationToken);
+	public async Task UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+	{
+		_dbSet.AttachRange(entities);
+		foreach (var entity in entities)
+		{
+			_context.Entry(entity).State = EntityState.Modified;
+		}
+		await _context.SaveChangesAsync(cancellationToken);
+	}
+
 
 	public Task RemoveAsync(TEntity entity, CancellationToken cancellationToken = default)
 		=> Task.Run(() => _dbSet.Remove(entity), cancellationToken);

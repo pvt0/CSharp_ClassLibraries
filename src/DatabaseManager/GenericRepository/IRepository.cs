@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DatabaseManager.GenericRepository;
 
-public interface IRepository<TEntity, TId> where TEntity : BaseEntity<TId>
+internal interface IRepository<TEntity, TId> where TEntity : BaseEntity<TId>
 {
 	Task<IQueryable<TEntity>> ListAsync(Expression<Func<TEntity, bool>>? expression = null, CancellationToken cancellationToken = default);
 	Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);

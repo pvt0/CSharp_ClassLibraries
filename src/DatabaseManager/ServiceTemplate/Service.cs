@@ -62,10 +62,10 @@ public class Service<TEntity, TId> : IService<TEntity, TId> where TEntity : Base
 	public async Task RemoveAsync(TId id, CancellationToken cancellationToken = default)
 	{
 		var entity = await _unitOfWork.Repository<TEntity, TId>()
-			.GetAsync(entity => entity.Id.Equals(id), cancellationToken);
+			.GetAsync(entity => entity.Id!.Equals(id), cancellationToken);
 
 		if (entity == null) 
-			throw new NullReferenceException($"Does not exist '{nameof(TEntity)}' with Id {id}");
+			throw new ArgumentException($"Does not exist '{nameof(TEntity)}' with Id {id}");
 		
 		await _unitOfWork.Repository<TEntity, TId>().RemoveAsync(entity, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);
@@ -77,7 +77,7 @@ public class Service<TEntity, TId> : IService<TEntity, TId> where TEntity : Base
 			.ListAsync(entity => ids.Contains(entity.Id), cancellationToken);
 
 		if (!entities.Any())
-			throw new NullReferenceException();
+			throw new ArgumentException($"Does not exists '{nameof(TEntity)}' with Ids: {ids}");
 		
 		await _unitOfWork.Repository<TEntity, TId>().RemoveRangeAsync(entities, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);

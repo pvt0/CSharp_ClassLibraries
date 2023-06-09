@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DatabaseManager.GenericUnitOfWork;
 
-public interface IUnitOfWork : IDisposable
+internal interface IUnitOfWork : IDisposable
 {
 	IRepository<TEntity, TId> Repository<TEntity, TId>() where TEntity : BaseEntity<TId>;
 	IDbContextTransaction BeginTransaction();

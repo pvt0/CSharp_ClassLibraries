@@ -1,10 +1,11 @@
 using DatabaseManager.GenericRepository;
 using DatabaseManager.GenericUnitOfWork;
+using DatabaseManager.ServiceTemplate;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DatabaseManager.Configuration;
+namespace DatabaseManager;
 
-public static class ConfigureServicesExtension
+public static class DependencyInjection
 {
 	public static IServiceCollection AddDatabaseManagerServices(this IServiceCollection services)
 	{
@@ -13,6 +14,7 @@ public static class ConfigureServicesExtension
 		
 		services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
+		services.AddSingleton(typeof(IService<,>), typeof(Service<,>));
 
 		return services;
 	}
