@@ -4,6 +4,16 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Title>Database Manager Infrastructure</Title>
+		<Authors>pvt0</Authors>
+		<Description>Contain all infrastructure needed to manage a database using Onion Architecture: 
+- Entity Template with a generic Key
+- Repository layer
+- Unit of work
+- Service template to create a specific service that inherits from this one</Description>
+		<RepositoryUrl>https://github.com/pvt0/CSharp_ClassLibraries</RepositoryUrl>
+		<PackageId>DatabaseManagerInfrastructure</PackageId>
 	</PropertyGroup>
 
 	<ItemGroup>
