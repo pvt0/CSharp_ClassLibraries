@@ -14,7 +14,7 @@
 - Service template to create a specific service that inherits from this one</Description>
 		<RepositoryUrl>https://github.com/pvt0/CSharp_ClassLibraries</RepositoryUrl>
 		<PackageId>DatabaseManagerInfrastructure</PackageId>
-		<Version>2.3.0</Version>
+		<Version>2.4.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
