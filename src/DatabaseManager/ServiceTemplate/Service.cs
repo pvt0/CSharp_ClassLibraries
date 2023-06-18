@@ -59,6 +59,12 @@ public class Service<TEntity, TId> where TEntity : BaseEntity<TId>
 		await _unitOfWork.SaveAsync(cancellationToken);
 	}
 
+	protected async Task RemoveAsync(TEntity entity, CancellationToken cancellationToken)
+	{
+		await _unitOfWork.Repository<TEntity, TId>().RemoveAsync(entity, cancellationToken);
+		await _unitOfWork.SaveAsync(cancellationToken);
+	}
+	
 	protected async Task RemoveAsync(TId id, CancellationToken cancellationToken = default)
 	{
 		var entity = await _unitOfWork.Repository<TEntity, TId>()
@@ -66,8 +72,13 @@ public class Service<TEntity, TId> where TEntity : BaseEntity<TId>
 
 		if (entity == null) 
 			throw new ArgumentException($"Does not exist '{nameof(TEntity)}' with Id {id}");
-		
-		await _unitOfWork.Repository<TEntity, TId>().RemoveAsync(entity, cancellationToken);
+
+		await RemoveAsync(entity, cancellationToken);
+	}
+
+	protected async Task RemoveRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
+	{
+		await _unitOfWork.Repository<TEntity, TId>().RemoveRangeAsync(entities, cancellationToken);
 		await _unitOfWork.SaveAsync(cancellationToken);
 	}
 
@@ -78,9 +89,8 @@ public class Service<TEntity, TId> where TEntity : BaseEntity<TId>
 
 		if (!entities.Any())
 			throw new ArgumentException($"Does not exists '{nameof(TEntity)}' with Ids: {ids}");
-		
-		await _unitOfWork.Repository<TEntity, TId>().RemoveRangeAsync(entities, cancellationToken);
-		await _unitOfWork.SaveAsync(cancellationToken);
+
+		await RemoveRangeAsync(entities, cancellationToken);
 	}
 
 	#endregion
