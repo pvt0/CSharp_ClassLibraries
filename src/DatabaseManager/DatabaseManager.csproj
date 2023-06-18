@@ -14,10 +14,14 @@
 - Service template to create a specific service that inherits from this one</Description>
 		<RepositoryUrl>https://github.com/pvt0/CSharp_ClassLibraries</RepositoryUrl>
 		<PackageId>DatabaseManagerInfrastructure</PackageId>
-		<Version>2.1.1</Version>
+		<Version>2.3.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="coverlet.collector" Version="6.0.0">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.7" />
 	</ItemGroup>
 

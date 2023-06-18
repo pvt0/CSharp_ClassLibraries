@@ -28,18 +28,19 @@ internal class UnitOfWork : IUnitOfWork
 
 	public IRepository<TEntity, TId> Repository<TEntity, TId>() where TEntity : BaseEntity<TId>
 	{
-		var type = typeof(TEntity);
+		var entityType = typeof(TEntity);
+		var idType = typeof(TId);
 
-		if ( ! _repositories.ContainsKey(type.Name))
+		if ( ! _repositories.ContainsKey(entityType.Name))
 		{
-			var repoType = typeof(Repository<,>).MakeGenericType(type);
+			var repoType = typeof(Repository<,>).MakeGenericType(entityType, idType);
 			var repo = Activator.CreateInstance(repoType, _context);
 
 			if (repo != null)
-				_repositories.Add(type.Name, repo);
+				_repositories.Add(entityType.Name, repo);
 		}
 
-		return (IRepository<TEntity, TId>)_repositories[type.Name];
+		return (IRepository<TEntity, TId>)_repositories[entityType.Name];
 	}
 
 	public IDbContextTransaction BeginTransaction()
